@@ -1,0 +1,34 @@
+require('dotenv').config();
+const cors = require('cors');
+const express = require('express');
+const connectDatabase = require('./config/database');
+const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+
+// TODO: Elyes mounts /api/restaurants, /api/categories, /api/dishes
+// TODO: Yahia mounts /api/orders
+// TODO: Asma mounts /api/dashboard
+
+app.use((error, req, res, next) => {
+  console.error(error);
+  if (res.headersSent) {
+    return next(error);
+  }
+  return res.status(500).json({ message: 'Internal server error' });
+});
+
+const port = Number(process.env.PORT) || 5000;
+connectDatabase()
+  .then(() => app.listen(port, () => console.log(`Server listening on port ${port}`)))
+  .catch((error) => {
+    console.error('Unable to start server:', error);
+    process.exitCode = 1;
+  });
