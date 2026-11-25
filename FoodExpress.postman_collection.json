@@ -1,0 +1,496 @@
+{
+  "info": {
+    "_postman_id": " foodexpress-turn2-collection",
+    "name": "FoodExpress - Turn 2 (Restaurants, Categories, Dishes)",
+    "description": "Collection to test FoodExpress Turn 2 endpoints with environment variables for Bearer token and resource IDs.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "PASTE_YOUR_JWT_TOKEN_HERE",
+      "type": "string"
+    },
+    {
+      "key": "restaurantId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "categoryId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "dishId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Auth (Optional Helper)",
+      "item": [
+        {
+          "name": "Login (Get Token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.token) {",
+                  "    pm.collectionVariables.set('token', response.token);",
+                  "    console.log('Saved token to collection variable');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"restaurateur@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Restaurants",
+      "item": [
+        {
+          "name": "GET /api/restaurants (Public - Default Alpha Sort & Pagination)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants?page=1&limit=12&sort=alpha",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "12" },
+                { "key": "sort", "value": "alpha" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/restaurants (With Filters: search, typeCuisine, isOpen)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants?search=pizza&typeCuisine=Italian&isOpen=true&page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants"],
+              "query": [
+                { "key": "search", "value": "pizza" },
+                { "key": "typeCuisine", "value": "Italian" },
+                { "key": "isOpen", "value": "true" },
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/restaurants/mine (Restaurateur / Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants/mine",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants", "mine"]
+            }
+          }
+        },
+        {
+          "name": "GET /api/restaurants/cuisines (Public Distinct Cuisines)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants/cuisines",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants", "cuisines"]
+            }
+          }
+        },
+        {
+          "name": "GET /api/restaurants/:id (Public / Owner)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "description": "Optional: provides owner/admin access to non-validated restaurants"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants/{{restaurantId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants", "{{restaurantId}}"]
+            }
+          }
+        },
+        {
+          "name": "POST /api/restaurants (Create - Restaurateur / Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res._id) {",
+                  "    pm.collectionVariables.set('restaurantId', res._id);",
+                  "    console.log('Saved restaurantId:', res._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"La Trattoria Express\",\n  \"description\": \"Fresh handmade pasta and authentic Neapolitan pizzas\",\n  \"adresse\": \"12 Rue de Marseille, Tunis\",\n  \"typeCuisine\": \"Italian\",\n  \"image\": \"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600\",\n  \"fraisLivraison\": 3.5,\n  \"horaires\": \"11:00 - 23:30\",\n  \"isOpen\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants"]
+            }
+          }
+        },
+        {
+          "name": "PUT /api/restaurants/:id (Update - Owner / Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"La Trattoria Express (Updated)\",\n  \"description\": \"Updated description with special seasonal promotions\",\n  \"adresse\": \"14 Rue de Marseille, Tunis\",\n  \"typeCuisine\": \"Italian Gourmet\",\n  \"fraisLivraison\": 4.0,\n  \"horaires\": \"10:30 - 00:00\",\n  \"isOpen\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants/{{restaurantId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants", "{{restaurantId}}"]
+            }
+          }
+        },
+        {
+          "name": "PATCH /api/restaurants/:id/status (Admin Only)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"validated\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants/{{restaurantId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants", "{{restaurantId}}", "status"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/restaurants/:id (Owner / Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurants/{{restaurantId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "restaurants", "{{restaurantId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Categories",
+      "item": [
+        {
+          "name": "GET /api/categories (Public - General or By Restaurant)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/categories?restaurant={{restaurantId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "categories"],
+              "query": [
+                {
+                  "key": "restaurant",
+                  "value": "{{restaurantId}}",
+                  "description": "Optional: leave empty to get general categories"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/categories (Create - Restaurateur / Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res._id) {",
+                  "    pm.collectionVariables.set('categoryId', res._id);",
+                  "    console.log('Saved categoryId:', res._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Pizzas Spéciales\",\n  \"description\": \"Wood-fired authentic pizzas\",\n  \"restaurant\": \"{{restaurantId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "categories"]
+            }
+          }
+        },
+        {
+          "name": "PUT /api/categories/:id (Update - Owner / Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Pizzas & Calzones (Renamed)\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "categories", "{{categoryId}}"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/categories/:id (Owner / Admin - Fails if dishes exist)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "categories", "{{categoryId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Dishes",
+      "item": [
+        {
+          "name": "GET /api/dishes (Public - With Filters)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/dishes?restaurant={{restaurantId}}&categorie={{categoryId}}&disponible=true&search=",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dishes"],
+              "query": [
+                { "key": "restaurant", "value": "{{restaurantId}}" },
+                { "key": "categorie", "value": "{{categoryId}}" },
+                { "key": "disponible", "value": "true" },
+                { "key": "search", "value": "" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "GET /api/dishes/:id (Public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/dishes/{{dishId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dishes", "{{dishId}}"]
+            }
+          }
+        },
+        {
+          "name": "POST /api/dishes (Create - Restaurateur / Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res._id) {",
+                  "    pm.collectionVariables.set('dishId', res._id);",
+                  "    console.log('Saved dishId:', res._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Pizza Margherita D.O.P\",\n  \"description\": \"San Marzano tomato sauce, fior di latte, fresh basil, extra virgin olive oil\",\n  \"prix\": 18.5,\n  \"image\": \"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600\",\n  \"disponible\": true,\n  \"restaurant\": \"{{restaurantId}}\",\n  \"categorie\": \"{{categoryId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/dishes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dishes"]
+            }
+          }
+        },
+        {
+          "name": "PUT /api/dishes/:id (Update Price / Availability / Details)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Pizza Margherita D.O.P (Large)\",\n  \"description\": \"Updated description with organic buffalo mozzarella\",\n  \"prix\": 21.0,\n  \"disponible\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/dishes/{{dishId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dishes", "{{dishId}}"]
+            }
+          }
+        },
+        {
+          "name": "DELETE /api/dishes/:id (Delete - Owner / Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/dishes/{{dishId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dishes", "{{dishId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

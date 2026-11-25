@@ -5,6 +5,10 @@ const connectDatabase = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 
+const restaurantRoutes = require('./routes/restaurantRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const dishRoutes = require('./routes/dishRoutes');
+
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -12,8 +16,10 @@ app.use(express.json());
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/restaurants', restaurantRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/dishes', dishRoutes);
 
-// TODO: Elyes mounts /api/restaurants, /api/categories, /api/dishes
 // TODO: Yahia mounts /api/orders
 // TODO: Asma mounts /api/dashboard
 

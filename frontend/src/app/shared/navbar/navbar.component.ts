@@ -17,25 +17,55 @@ import { CartService } from '../../core/services/cart.service';
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" [class.show]="menuOpen">
-          <div class="navbar-nav me-auto">
-            <a class="nav-link" routerLink="/restaurants" routerLinkActive="active">Restaurants</a>
-            <a class="nav-link" routerLink="/cart" routerLinkActive="active">
+          <div class="navbar-nav me-auto align-items-lg-center">
+            <a class="nav-link" routerLink="/restaurants" routerLinkActive="active" (click)="menuOpen = false">Explore Restaurants</a>
+            
+            <a class="nav-link" routerLink="/cart" routerLinkActive="active" (click)="menuOpen = false">
               Cart <span class="badge rounded-pill text-bg-warning">{{ count$ | async }}</span>
             </a>
+
             @if ((auth.currentUser$ | async)?.role === 'client') {
-              <a class="nav-link" routerLink="/my-orders" routerLinkActive="active">My Orders</a>
+              <a class="nav-link" routerLink="/my-orders" routerLinkActive="active" (click)="menuOpen = false">My Orders</a>
             }
+
             @if ((auth.currentUser$ | async)?.role === 'restaurateur' || (auth.currentUser$ | async)?.role === 'admin') {
-              <a class="nav-link" [routerLink]="dashboardLink" routerLinkActive="active">Dashboard</a>
+              <div class="nav-item dropdown d-none d-lg-block">
+                <a class="nav-link dropdown-toggle fw-semibold text-primary" href="#" role="button" (click)="$event.preventDefault(); dashboardDropdownOpen = !dashboardDropdownOpen">
+                  Restaurateur Space
+                </a>
+                <ul class="dropdown-menu shadow-sm border-0" [class.show]="dashboardDropdownOpen">
+                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard/dishes" (click)="closeMenus()">🍽️ Manage Menu & Restaurant</a></li>
+                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard/orders" (click)="closeMenus()">📦 Orders Overview</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard" (click)="closeMenus()">📊 Dashboard Home</a></li>
+                </ul>
+              </div>
+
+              <!-- Mobile-friendly links for restaurateur -->
+              <div class="d-lg-none border-top my-2 pt-2">
+                <span class="text-muted small px-3 fw-bold d-block">RESTAURATEUR SPACE</span>
+                <a class="nav-link" routerLink="/restaurant-dashboard/dishes" routerLinkActive="active" (click)="menuOpen = false">🍽️ Manage Menu & Restaurant</a>
+                <a class="nav-link" routerLink="/restaurant-dashboard/orders" routerLinkActive="active" (click)="menuOpen = false">📦 Orders Overview</a>
+              </div>
+            }
+
+            @if ((auth.currentUser$ | async)?.role === 'admin') {
+              <a class="nav-link text-danger" routerLink="/admin/restaurants" routerLinkActive="active" (click)="menuOpen = false">
+                Admin Panel
+              </a>
             }
           </div>
+
           <div class="navbar-nav align-items-lg-center gap-lg-2">
             @if (auth.currentUser$ | async; as user) {
-              <a class="nav-link" routerLink="/profile">{{ user.prenom }} {{ user.nom }}</a>
-              <button class="btn btn-outline-primary btn-sm" type="button" (click)="logout()">Logout</button>
+              <span class="badge bg-light text-dark border text-capitalize py-2 px-3 d-none d-lg-inline-block">
+                {{ user.role }}
+              </span>
+              <a class="nav-link fw-semibold" routerLink="/profile" (click)="menuOpen = false">{{ user.prenom }} {{ user.nom }}</a>
+              <button class="btn btn-outline-primary btn-sm rounded-pill px-3" type="button" (click)="logout()">Logout</button>
             } @else {
-              <a class="nav-link" routerLink="/login">Login</a>
-              <a class="btn btn-primary btn-sm px-3" routerLink="/register">Register</a>
+              <a class="nav-link" routerLink="/login" (click)="menuOpen = false">Login</a>
+              <a class="btn btn-primary btn-sm px-3 rounded-pill" routerLink="/register" (click)="menuOpen = false">Register</a>
             }
           </div>
         </div>
@@ -47,6 +77,7 @@ import { CartService } from '../../core/services/cart.service';
     .food-brand { color: #1f2937; font-weight: 850; letter-spacing: -.05em; font-size: 1.45rem; }
     .food-brand span { color: #e4572e; }
     .nav-link { font-weight: 550; }
+    .dropdown-menu { border-radius: 12px; min-width: 230px; }
     @media (max-width: 991.98px) { .navbar-collapse { padding: .8rem 0; } }
   `],
 })
@@ -56,14 +87,16 @@ export class NavbarComponent {
   private readonly cart = inject(CartService);
   protected readonly count$ = this.cart.count$;
   protected menuOpen = false;
+  protected dashboardDropdownOpen = false;
 
-  get dashboardLink(): string {
-    return this.auth.getRole() === 'admin' ? '/admin/statistics' : '/restaurant-dashboard';
+  closeMenus(): void {
+    this.menuOpen = false;
+    this.dashboardDropdownOpen = false;
   }
 
   logout(): void {
     this.auth.logout();
-    this.menuOpen = false;
+    this.closeMenus();
     void this.router.navigateByUrl('/login');
   }
 }
