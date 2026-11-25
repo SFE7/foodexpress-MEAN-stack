@@ -5,7 +5,7 @@ async function connectDatabase() {
     throw new Error('MONGO_URI is required');
   }
 
-  await mongoose.connect(process.env.MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI, { dbName: 'foodexpress' });
   console.log('Connected to MongoDB');
 }
 

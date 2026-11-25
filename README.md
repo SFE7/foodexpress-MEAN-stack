@@ -14,7 +14,7 @@ FoodExpress is a full-stack food ordering and restaurant management platform bui
 
 ## Prerequisites
 
-- **Node.js** >= 20 (LTS recommended) and **npm** >= 10
+- **Node.js** `^22.22.3`, `^24.15.0`, or `>=26` and **npm** >= 10
 - **MongoDB** running locally (`mongodb://127.0.0.1:27017`) or a MongoDB Atlas connection string
 - **Angular CLI** (optional globally; included locally via `npx ng`)
 
@@ -38,7 +38,7 @@ FoodExpress is a full-stack food ordering and restaurant management platform bui
 
 ## Environment Configuration (`.env`)
 
-Create `backend/.env` with your MongoDB URI (using the `foodexpress` database) and JWT secret:
+Create `backend/.env` with your MongoDB URI and JWT secret. The backend and seed script both use the `foodexpress` database, including when an Atlas URI does not specify a database path:
 
 ```env
 PORT=5000
