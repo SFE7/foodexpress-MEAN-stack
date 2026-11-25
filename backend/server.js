@@ -9,6 +9,7 @@ const restaurantRoutes = require('./routes/restaurantRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const dishRoutes = require('./routes/dishRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 
 const app = express();
 app.use(cors());
@@ -22,7 +23,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/dishes', dishRoutes);
 app.use('/api/orders', orderRoutes);
 
-// TODO: Asma mounts /api/dashboard
+app.use('/api/dashboard', dashboardRoutes);
 
 app.use((error, req, res, next) => {
   console.error(error);

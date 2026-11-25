@@ -33,6 +33,10 @@ export class RestaurantService {
     return this.http.get<Restaurant[]>(`${this.baseUrl}/mine`);
   }
 
+  getAllAdmin(): Observable<Restaurant[]> {
+    return this.http.get<Restaurant[]>(`${this.baseUrl}/admin/all`);
+  }
+
   getById(id: string): Observable<Restaurant> {
     return this.http.get<Restaurant>(`${this.baseUrl}/${id}`);
   }

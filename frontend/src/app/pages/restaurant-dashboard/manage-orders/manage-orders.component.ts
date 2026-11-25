@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Subscription, interval } from 'rxjs';
@@ -9,6 +10,7 @@ import {
   ORDER_STATUS_BADGES,
 } from '../../../core/models/order.model';
 import { User } from '../../../core/models/user.model';
+import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.component';
 
 interface StatusTab {
   id: string;
@@ -16,11 +18,13 @@ interface StatusTab {
 }
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-manage-orders',
   standalone: true,
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule, DatePipe, PortalNavComponent],
   template: `
     <div class="container py-4 py-md-5">
+      <app-portal-nav area="restaurateur" />
       <!-- Header -->
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
         <div>

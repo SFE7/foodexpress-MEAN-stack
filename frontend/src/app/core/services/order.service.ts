@@ -15,10 +15,13 @@ export class OrderService {
     return this.http.get<Order[]>('/api/orders/my-orders');
   }
 
-  getRestaurantOrders(statut?: string): Observable<Order[]> {
+  getRestaurantOrders(statut?: string, restaurantId?: string): Observable<Order[]> {
     let params = new HttpParams();
     if (statut && statut !== 'all') {
       params = params.set('statut', statut);
+    }
+    if (restaurantId) {
+      params = params.set('restaurant', restaurantId);
     }
     return this.http.get<Order[]>('/api/orders/restaurant', { params });
   }

@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -9,6 +10,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { CreateOrderPayload } from '../../core/models/order.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-checkout',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterLink],

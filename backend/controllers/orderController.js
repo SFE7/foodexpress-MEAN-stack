@@ -146,7 +146,15 @@ async function getRestaurantOrders(req, res, next) {
     } else {
       const ownedRestaurants = await Restaurant.find({ owner: req.user._id }).select('_id');
       const restIds = ownedRestaurants.map((r) => r._id);
-      query.restaurant = { $in: restIds };
+      if (req.query.restaurant) {
+        const ownsRequested = restIds.some((id) => id.toString() === String(req.query.restaurant));
+        if (!ownsRequested) {
+          return res.status(403).json({ message: 'Forbidden: you do not own this restaurant' });
+        }
+        query.restaurant = req.query.restaurant;
+      } else {
+        query.restaurant = { $in: restIds };
+      }
     }
 
     if (req.query.statut && req.query.statut !== 'all') {

@@ -60,6 +60,18 @@ async function getMyRestaurants(req, res, next) {
   }
 }
 
+// GET /api/restaurants/admin/all (admin only - returns all restaurants regardless of status)
+async function getAllRestaurantsAdmin(req, res, next) {
+  try {
+    const restaurants = await Restaurant.find()
+      .sort({ createdAt: -1 })
+      .populate('owner', 'nom prenom email telephone');
+    return res.json(restaurants);
+  } catch (error) {
+    return next(error);
+  }
+}
+
 // GET /api/restaurants/cuisines (PUBLIC)
 async function getCuisines(req, res, next) {
   try {
@@ -215,6 +227,7 @@ async function updateRestaurantStatus(req, res, next) {
 module.exports = {
   getRestaurants,
   getMyRestaurants,
+  getAllRestaurantsAdmin,
   getCuisines,
   getRestaurantById,
   createRestaurant,

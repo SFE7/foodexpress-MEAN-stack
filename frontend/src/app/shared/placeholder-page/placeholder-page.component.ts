@@ -1,6 +1,8 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, Input } from '@angular/core';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-placeholder-page',
   standalone: true,
   template: `

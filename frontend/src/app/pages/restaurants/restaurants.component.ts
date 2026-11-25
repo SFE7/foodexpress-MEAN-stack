@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +7,7 @@ import { RestaurantService } from '../../core/services/restaurant.service';
 import { Restaurant } from '../../core/models/restaurant.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-restaurants',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],

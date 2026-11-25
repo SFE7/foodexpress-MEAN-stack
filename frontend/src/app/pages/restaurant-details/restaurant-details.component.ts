@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -8,6 +9,7 @@ import { CartService } from '../../core/services/cart.service';
 import { Category, Dish, Restaurant } from '../../core/models/restaurant.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-restaurant-details',
   standalone: true,
   imports: [CommonModule, RouterLink],

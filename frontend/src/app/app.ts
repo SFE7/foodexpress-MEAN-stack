@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
@@ -6,6 +7,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterOutlet, NavbarComponent, FooterComponent],
   selector: 'app-root',
   styleUrl: './app.css',

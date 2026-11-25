@@ -35,6 +35,14 @@ router.get(
   restaurantController.getMyRestaurants
 );
 
+// 2b. GET /admin/all (admin only) - declared BEFORE /:id
+router.get(
+  '/admin/all',
+  authMiddleware,
+  authorize('admin'),
+  restaurantController.getAllRestaurantsAdmin
+);
+
 // 3. GET /cuisines (PUBLIC) - declared BEFORE /:id
 router.get('/cuisines', restaurantController.getCuisines);
 

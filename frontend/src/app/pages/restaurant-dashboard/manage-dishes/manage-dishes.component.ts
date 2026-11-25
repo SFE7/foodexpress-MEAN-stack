@@ -1,3 +1,4 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,13 +7,16 @@ import { CategoryService } from '../../../core/services/category.service';
 import { DishService } from '../../../core/services/dish.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { Category, Dish, Restaurant } from '../../../core/models/restaurant.model';
+import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.component';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-manage-dishes',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PortalNavComponent],
   template: `
     <div class="container py-4">
+      <app-portal-nav area="restaurateur" />
       <!-- Page Header -->
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
         <div>

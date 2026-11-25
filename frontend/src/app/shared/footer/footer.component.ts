@@ -1,7 +1,9 @@
+import { ChangeDetectionStrategy } from '@angular/core';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-footer',
   standalone: true,
   imports: [RouterLink],
