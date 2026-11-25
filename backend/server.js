@@ -8,6 +8,7 @@ const userRoutes = require('./routes/userRoutes');
 const restaurantRoutes = require('./routes/restaurantRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const dishRoutes = require('./routes/dishRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 app.use(cors());
@@ -19,8 +20,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/restaurants', restaurantRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/dishes', dishRoutes);
+app.use('/api/orders', orderRoutes);
 
-// TODO: Yahia mounts /api/orders
 // TODO: Asma mounts /api/dashboard
 
 app.use((error, req, res, next) => {
