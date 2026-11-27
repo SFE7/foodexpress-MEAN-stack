@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environment/environment';
 import { CreateOrderPayload, Order, OrderStatus } from '../models/order.model';
 
 @Injectable({ providedIn: 'root' })
@@ -8,11 +9,11 @@ export class OrderService {
   private readonly http = inject(HttpClient);
 
   createOrder(payload: CreateOrderPayload): Observable<Order> {
-    return this.http.post<Order>('/api/orders', payload);
+    return this.http.post<Order>(`${environment.apiUrl}/orders`, payload);
   }
 
   getMyOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>('/api/orders/my-orders');
+    return this.http.get<Order[]>(`${environment.apiUrl}/orders/my-orders`);
   }
 
   getRestaurantOrders(statut?: string, restaurantId?: string): Observable<Order[]> {
@@ -23,14 +24,14 @@ export class OrderService {
     if (restaurantId) {
       params = params.set('restaurant', restaurantId);
     }
-    return this.http.get<Order[]>('/api/orders/restaurant', { params });
+    return this.http.get<Order[]>(`${environment.apiUrl}/orders/restaurant`, { params });
   }
 
   getById(id: string): Observable<Order> {
-    return this.http.get<Order>(`/api/orders/${id}`);
+    return this.http.get<Order>(`${environment.apiUrl}/orders/${id}`);
   }
 
   updateStatus(id: string, statut: OrderStatus): Observable<Order> {
-    return this.http.put<Order>(`/api/orders/${id}/status`, { statut });
+    return this.http.put<Order>(`${environment.apiUrl}/orders/${id}/status`, { statut });
   }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { AuthResponse, User, UserRole } from '../models/user.model';
+import { environment } from '../../../environment/environment';
 
 export interface RegisterPayload {
   nom: string;
@@ -27,13 +28,13 @@ export class AuthService {
   readonly currentUser$ = this.userSubject.asObservable();
 
   register(payload: RegisterPayload): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>('/api/auth/register', payload).pipe(
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/register`, payload).pipe(
       tap((response) => this.storeSession(response)),
     );
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>('/api/auth/login', { email, password }).pipe(
+    return this.http.post<AuthResponse>(`${environment.apiUrl}/auth/login`, { email, password }).pipe(
       tap((response) => this.storeSession(response)),
     );
   }
@@ -45,7 +46,7 @@ export class AuthService {
   }
 
   getMe(): Observable<User> {
-    return this.http.get<{ user: User }>('/api/auth/me').pipe(
+    return this.http.get<{ user: User }>(`${environment.apiUrl}/auth/me`).pipe(
       map((response) => response.user),
       tap((user) => {
         localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -55,7 +56,7 @@ export class AuthService {
   }
 
   updateProfile(payload: ProfileUpdate): Observable<User> {
-    return this.http.put<{ user: User }>('/api/auth/profile', payload).pipe(
+    return this.http.put<{ user: User }>(`${environment.apiUrl}/auth/profile`, payload).pipe(
       map((response) => response.user),
       tap((user) => {
         localStorage.setItem(USER_KEY, JSON.stringify(user));
