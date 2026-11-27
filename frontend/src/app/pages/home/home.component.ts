@@ -12,15 +12,15 @@ import { Restaurant } from '../../core/models/restaurant.model';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   template: `
-    <section class="hero-section text-center py-5">
-      <div class="container py-4">
-        <h1 class="display-4 fw-bold text-dark mb-3">
+    <section class="hero-section text-center py-4 py-md-5">
+      <div class="container py-3 py-md-4">
+        <h1 class="display-5 display-md-4 fw-bold text-dark mb-3">
           Craving something <span class="highlight">delicious</span>?
         </h1>
         <p class="lead text-muted mb-4 mx-auto" style="max-width: 600px;">
           Explore the best restaurants in your town, freshly prepared meals, and fast delivery right to your door.
         </p>
-        <form (ngSubmit)="searchRestaurants()" class="search-form mx-auto d-flex gap-2">
+        <form (ngSubmit)="searchRestaurants()" class="search-form mx-auto d-flex flex-column flex-sm-row gap-2">
           <input
             type="text"
             [(ngModel)]="searchQuery"
@@ -28,7 +28,7 @@ import { Restaurant } from '../../core/models/restaurant.model';
             class="form-control form-control-lg rounded-pill px-4 shadow-sm"
             placeholder="Search for restaurants, dishes, or flavors..."
           />
-          <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold shadow-sm">Search</button>
+          <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4 fw-semibold shadow-sm text-nowrap">Search</button>
         </form>
       </div>
     </section>
@@ -46,7 +46,7 @@ import { Restaurant } from '../../core/models/restaurant.model';
               (click)="filterByCuisine(cuisine)"
               class="btn btn-light rounded-pill px-4 py-2 text-nowrap cuisine-chip fw-medium border shadow-xs"
             >
-              🍽️ {{ cuisine }}
+              <i class="bi bi-fork-knife me-1"></i> {{ cuisine }}
             </button>
           }
         </div>
@@ -54,7 +54,7 @@ import { Restaurant } from '../../core/models/restaurant.model';
     }
 
     <section class="container my-5">
-      <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
         <div>
           <h2 class="h3 fw-bold mb-1">Popular Restaurants</h2>
           <p class="text-muted mb-0">Top-rated spots ready to take your order</p>

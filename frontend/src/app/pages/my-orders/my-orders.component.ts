@@ -32,16 +32,16 @@ interface StepDef {
           <h1 class="h2 fw-bold mb-1">My Orders</h1>
           <p class="text-muted mb-0">Track your order statuses in real-time</p>
         </div>
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex flex-wrap align-items-center gap-2">
           <span class="live-dot" title="Live status updates active"></span>
           <span class="small text-muted">Auto-refreshes every 15s</span>
           <button
             type="button"
-            class="btn btn-sm btn-outline-secondary rounded-pill px-3 ms-2"
+            class="btn btn-sm btn-outline-secondary rounded-pill px-3 ms-sm-2"
             (click)="loadOrders(true)"
             [disabled]="loading"
           >
-            🔄 Refresh
+            <i class="bi bi-arrow-clockwise me-1"></i> Refresh
           </button>
         </div>
       </div>
@@ -71,7 +71,7 @@ interface StepDef {
       } @else if (orders.length === 0) {
         <!-- Empty Orders State -->
         <div class="card food-card text-center p-5 mx-auto empty-card">
-          <div class="display-3 mb-3">📦</div>
+          <div class="display-3 mb-3 text-muted"><i class="bi bi-box-seam"></i></div>
           <h2 class="h4 fw-bold mb-2">No orders placed yet</h2>
           <p class="text-muted mb-4">
             You haven't ordered any meals yet. Browse our selection of popular restaurants and treat yourself!
@@ -141,7 +141,7 @@ interface StepDef {
                 @if (order.statut === 'annulee') {
                   <!-- Cancelled Banner -->
                   <div class="alert alert-danger mb-0 d-flex align-items-center gap-3 py-3 px-4 rounded-3 border-danger-subtle">
-                    <span class="fs-3">🛑</span>
+                    <span class="fs-3"><i class="bi bi-x-octagon-fill"></i></span>
                     <div>
                       <div class="fw-bold">Order Cancelled</div>
                       <div class="small text-danger-emphasis">
@@ -162,9 +162,9 @@ interface StepDef {
                         >
                           <div class="step-circle mx-auto mb-2 shadow-sm">
                             @if (isStepCompleted(order.statut, i)) {
-                              <span>✓</span>
+                              <i class="bi bi-check-lg"></i>
                             } @else {
-                              <span>{{ step.icon }}</span>
+                              <i [class]="'bi ' + step.icon"></i>
                             }
                           </div>
                           <div class="step-label small fw-semibold">
@@ -353,15 +353,18 @@ interface StepDef {
     }
     @media (max-width: 576px) {
       .step-circle {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         font-size: 0.75rem;
       }
       .step-label {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
+        line-height: 1.15;
+        word-break: break-word;
+        padding: 0 2px;
       }
       .stepper-progress-bar {
-        top: 16px;
+        top: 15px;
       }
     }
   `],
@@ -373,11 +376,11 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
     'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=80';
 
   readonly steps: StepDef[] = [
-    { key: 'en_attente', label: 'En attente', icon: '⏳' },
-    { key: 'acceptee', label: 'Acceptée', icon: '✅' },
-    { key: 'en_preparation', label: 'En préparation', icon: '👨‍🍳' },
-    { key: 'en_livraison', label: 'En livraison', icon: '🛵' },
-    { key: 'livree', label: 'Livrée', icon: '🎉' },
+    { key: 'en_attente', label: 'En attente', icon: 'bi-hourglass-split' },
+    { key: 'acceptee', label: 'Acceptée', icon: 'bi-check-circle-fill' },
+    { key: 'en_preparation', label: 'En préparation', icon: 'bi-fire' },
+    { key: 'en_livraison', label: 'En livraison', icon: 'bi-scooter' },
+    { key: 'livree', label: 'Livrée', icon: 'bi-bag-check-fill' },
   ];
 
   private readonly stepOrder: OrderStatus[] = [

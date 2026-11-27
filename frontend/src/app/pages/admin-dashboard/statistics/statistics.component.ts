@@ -53,7 +53,7 @@ interface StatusSegment {
             <div class="card food-card p-3 p-md-4 h-100">
               <div class="d-flex justify-content-between align-items-start mb-2">
                 <span class="text-muted small fw-semibold text-uppercase">Clients</span>
-                <span class="kpi-badge kpi-clients">👥</span>
+                <span class="kpi-badge kpi-clients"><i class="bi bi-people-fill"></i></span>
               </div>
               <div class="display-6 fw-bold text-dark">{{ stats.clientsCount }}</div>
               <div class="small text-muted mt-1">Registered clients</div>
@@ -64,7 +64,7 @@ interface StatusSegment {
             <div class="card food-card p-3 p-md-4 h-100">
               <div class="d-flex justify-content-between align-items-start mb-2">
                 <span class="text-muted small fw-semibold text-uppercase">Restaurants</span>
-                <span class="kpi-badge kpi-restaurants">🏪</span>
+                <span class="kpi-badge kpi-restaurants"><i class="bi bi-shop"></i></span>
               </div>
               <div class="display-6 fw-bold text-primary">{{ stats.restaurantsCount }}</div>
               <div class="small text-muted mt-1">All listed venues</div>
@@ -75,7 +75,7 @@ interface StatusSegment {
             <div class="card food-card p-3 p-md-4 h-100">
               <div class="d-flex justify-content-between align-items-start mb-2">
                 <span class="text-muted small fw-semibold text-uppercase">Orders</span>
-                <span class="kpi-badge kpi-orders">📦</span>
+                <span class="kpi-badge kpi-orders"><i class="bi bi-box-seam"></i></span>
               </div>
               <div class="display-6 fw-bold text-dark">{{ stats.ordersCount }}</div>
               <div class="small text-muted mt-1">Total orders placed</div>
@@ -86,7 +86,7 @@ interface StatusSegment {
             <div class="card food-card p-3 p-md-4 h-100">
               <div class="d-flex justify-content-between align-items-start mb-2">
                 <span class="text-muted small fw-semibold text-uppercase">Global Revenue</span>
-                <span class="kpi-badge kpi-revenue">💰</span>
+                <span class="kpi-badge kpi-revenue"><i class="bi bi-cash-stack"></i></span>
               </div>
               <div class="h2 fw-bold text-success mb-0 mt-1">{{ stats.globalRevenue.toFixed(2) }} DT</div>
               <div class="small text-muted mt-2">Excludes cancelled orders</div>
@@ -185,6 +185,7 @@ interface StatusSegment {
     .kpi-revenue { background: rgba(16, 185, 129, 0.12); }
     .donut-wrapper {
       width: 210px;
+      max-width: 100%;
       height: 210px;
     }
     .donut-svg {

@@ -24,7 +24,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
           <p class="text-muted mb-0">Search users and activate or deactivate platform accounts</p>
         </div>
 
-        <form (ngSubmit)="fetchUsers()" class="d-flex gap-2 search-box">
+        <form (ngSubmit)="fetchUsers()" class="d-flex gap-2 search-box w-100 w-md-auto">
           <input
             type="text"
             class="form-control rounded-pill px-3"
@@ -56,7 +56,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
         </div>
       } @else if (users.length === 0) {
         <div class="card food-card text-center p-5">
-          <div class="fs-1 mb-2">👥</div>
+          <div class="fs-1 mb-2 text-muted"><i class="bi bi-people"></i></div>
           <h2 class="h5 fw-bold mb-1">No users found</h2>
           <p class="text-muted mb-0">Try another search query.</p>
         </div>

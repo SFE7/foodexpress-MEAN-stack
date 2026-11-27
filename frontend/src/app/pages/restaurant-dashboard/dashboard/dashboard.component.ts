@@ -47,15 +47,15 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
             </select>
           } @else if (restaurants.length === 1) {
             <span class="badge bg-white text-dark border rounded-pill px-3 py-2 shadow-sm">
-              🏪 {{ restaurants[0].nom }}
+              <i class="bi bi-shop me-1 text-primary"></i> {{ restaurants[0].nom }}
             </span>
           }
 
           <a routerLink="/restaurant-dashboard/dishes" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold">
-            🍽️ Manage Dishes
+            <i class="bi bi-fork-knife me-1"></i> Manage Dishes
           </a>
           <a routerLink="/restaurant-dashboard/orders" class="btn btn-primary btn-sm rounded-pill px-3 fw-semibold">
-            📦 Manage Orders
+            <i class="bi bi-box-seam me-1"></i> Manage Orders
           </a>
         </div>
       </div>
@@ -86,7 +86,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
             <div class="card food-card kpi-card p-3 p-md-4 h-100">
               <div class="d-flex justify-content-between align-items-start mb-2">
                 <span class="text-muted small fw-semibold text-uppercase">Total Orders</span>
-                <span class="kpi-icon kpi-icon-primary">📦</span>
+                <span class="kpi-icon kpi-icon-primary"><i class="bi bi-box-seam"></i></span>
               </div>
               <div class="display-6 fw-bold text-dark">{{ stats.totalOrders }}</div>
               <div class="small text-muted mt-1">All recorded orders</div>
@@ -97,7 +97,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
             <div class="card food-card kpi-card p-3 p-md-4 h-100">
               <div class="d-flex justify-content-between align-items-start mb-2">
                 <span class="text-muted small fw-semibold text-uppercase">Pending</span>
-                <span class="kpi-icon kpi-icon-accent">⏳</span>
+                <span class="kpi-icon kpi-icon-accent"><i class="bi bi-hourglass-split"></i></span>
               </div>
               <div class="display-6 fw-bold text-warning-dark">{{ stats.pendingOrders }}</div>
               <div class="small text-muted mt-1">Awaiting acceptance</div>
@@ -108,7 +108,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
             <div class="card food-card kpi-card p-3 p-md-4 h-100">
               <div class="d-flex justify-content-between align-items-start mb-2">
                 <span class="text-muted small fw-semibold text-uppercase">Accepted</span>
-                <span class="kpi-icon kpi-icon-blue">✅</span>
+                <span class="kpi-icon kpi-icon-blue"><i class="bi bi-check-circle-fill"></i></span>
               </div>
               <div class="display-6 fw-bold text-primary">{{ stats.acceptedOrders }}</div>
               <div class="small text-muted mt-1">Ready for kitchen</div>
@@ -119,7 +119,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
             <div class="card food-card kpi-card p-3 p-md-4 h-100">
               <div class="d-flex justify-content-between align-items-start mb-2">
                 <span class="text-muted small fw-semibold text-uppercase">Revenue</span>
-                <span class="kpi-icon kpi-icon-green">💰</span>
+                <span class="kpi-icon kpi-icon-green"><i class="bi bi-cash-stack"></i></span>
               </div>
               <div class="h2 fw-bold text-success mb-0 mt-1">{{ stats.revenue.toFixed(2) }} DT</div>
               <div class="small text-muted mt-2">Excludes cancelled orders</div>
@@ -182,7 +182,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
 
               @if (pendingOrdersList.length === 0) {
                 <div class="text-center py-4 text-muted">
-                  🎉 No pending orders at the moment.
+                  <i class="bi bi-check-circle-fill text-success me-1"></i> No pending orders at the moment.
                 </div>
               } @else {
                 <div class="d-flex flex-column gap-3">

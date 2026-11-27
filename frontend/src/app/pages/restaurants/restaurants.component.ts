@@ -27,7 +27,7 @@ import { Restaurant } from '../../core/models/restaurant.model';
           <!-- Search input -->
           <div class="col-12 col-md-4">
             <div class="input-group">
-              <span class="input-group-text bg-white border-end-0">🔍</span>
+              <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
               <input
                 type="text"
                 class="form-control border-start-0"
@@ -82,7 +82,7 @@ import { Restaurant } from '../../core/models/restaurant.model';
       } @else if (restaurants.length === 0) {
         <!-- Empty State -->
         <div class="card food-card text-center p-5 my-4">
-          <div class="fs-1 mb-2">🍽️</div>
+          <div class="fs-1 mb-2 text-muted"><i class="bi bi-fork-knife"></i></div>
           <h2 class="h4 fw-bold mb-2">No restaurants found</h2>
           <p class="text-muted mb-4">Try clearing some filters or searching for something else.</p>
           <div>
@@ -128,10 +128,10 @@ import { Restaurant } from '../../core/models/restaurant.model';
 
                   <div class="small text-muted mb-3">
                     @if (restaurant.adresse) {
-                      <div class="text-truncate mb-1">📍 {{ restaurant.adresse }}</div>
+                      <div class="text-truncate mb-1"><i class="bi bi-geo-alt-fill text-primary me-1"></i> {{ restaurant.adresse }}</div>
                     }
                     @if (restaurant.horaires) {
-                      <div class="text-truncate">🕒 {{ restaurant.horaires }}</div>
+                      <div class="text-truncate"><i class="bi bi-clock text-primary me-1"></i> {{ restaurant.horaires }}</div>
                     }
                   </div>
 

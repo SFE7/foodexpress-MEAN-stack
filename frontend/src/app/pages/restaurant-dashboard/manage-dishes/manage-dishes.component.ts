@@ -45,7 +45,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
       } @else if (myRestaurants.length === 0) {
         <!-- No Restaurant Form / Empty State -->
         <div class="card food-card text-center p-5">
-          <div class="fs-1 mb-2">🏪</div>
+          <div class="fs-1 mb-2 text-primary"><i class="bi bi-shop"></i></div>
           <h2 class="h4 fw-bold mb-2">No restaurant yet</h2>
           <p class="text-muted mb-4">Create your first restaurant to start adding categories and dishes.</p>
           <div>
@@ -97,7 +97,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
           <!-- Pending Validation Alert -->
           @if (selectedRestaurant?.status === 'pending') {
             <div class="alert alert-warning mt-3 mb-0 d-flex align-items-center gap-2" role="alert">
-              <span>⏳</span>
+              <i class="bi bi-hourglass-split fs-5"></i>
               <div>
                 <strong>Restaurant pending validation:</strong> Your restaurant has been submitted and is waiting for administrator approval before becoming publicly visible in browsing pages. You can still set up your menu and categories in the meantime!
               </div>

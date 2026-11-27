@@ -37,10 +37,10 @@ interface StatusTab {
           <p class="text-muted mb-0">Track incoming client orders and update their preparation lifecycle</p>
         </div>
 
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex flex-wrap align-items-center gap-2">
           @if (pendingCount > 0) {
             <span class="badge bg-warning text-dark px-3 py-2 fs-6 shadow-sm">
-              ⚠️ {{ pendingCount }} Pending Order{{ pendingCount > 1 ? 's' : '' }}
+              <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ pendingCount }} Pending Order{{ pendingCount > 1 ? 's' : '' }}
             </span>
           }
           <button
@@ -49,7 +49,7 @@ interface StatusTab {
             (click)="loadOrders(true)"
             [disabled]="loading"
           >
-            🔄 Refresh
+            <i class="bi bi-arrow-clockwise me-1"></i> Refresh
           </button>
         </div>
       </div>
@@ -103,7 +103,7 @@ interface StatusTab {
         </div>
       } @else if (filteredOrders.length === 0) {
         <div class="card food-card text-center p-5 mx-auto empty-card my-4">
-          <div class="fs-1 mb-2">🍽️</div>
+          <div class="fs-1 mb-2 text-muted"><i class="bi bi-fork-knife"></i></div>
           <h2 class="h4 fw-bold mb-2">No orders in this category</h2>
           <p class="text-muted mb-0">
             @if (activeTab === 'all') {
@@ -196,8 +196,10 @@ interface StatusTab {
                           >
                             @if (actionLoadingId === order._id) {
                               <span class="spinner-border spinner-border-sm me-1"></span>
+                            } @else {
+                              <i class="bi bi-check-lg me-1"></i>
                             }
-                            ✓ Accept
+                            Accept
                           </button>
                           <button
                             type="button"
@@ -206,7 +208,7 @@ interface StatusTab {
                             [disabled]="actionLoadingId === order._id"
                             title="Refuse / Cancel"
                           >
-                            ✕ Refuse
+                            <i class="bi bi-x-lg me-1"></i>Refuse
                           </button>
                         } @else if (order.statut === 'acceptee') {
                           <button
@@ -217,8 +219,10 @@ interface StatusTab {
                           >
                             @if (actionLoadingId === order._id) {
                               <span class="spinner-border spinner-border-sm me-1"></span>
+                            } @else {
+                              <i class="bi bi-fire me-1"></i>
                             }
-                            👨‍🍳 Start Prep
+                            Start Prep
                           </button>
                         } @else if (order.statut === 'en_preparation') {
                           <button
@@ -229,8 +233,10 @@ interface StatusTab {
                           >
                             @if (actionLoadingId === order._id) {
                               <span class="spinner-border spinner-border-sm me-1"></span>
+                            } @else {
+                              <i class="bi bi-scooter me-1"></i>
                             }
-                            🛵 Send Delivery
+                            Send Delivery
                           </button>
                         } @else if (order.statut === 'en_livraison') {
                           <button
@@ -241,8 +247,10 @@ interface StatusTab {
                           >
                             @if (actionLoadingId === order._id) {
                               <span class="spinner-border spinner-border-sm me-1"></span>
+                            } @else {
+                              <i class="bi bi-bag-check-fill me-1"></i>
                             }
-                            🎉 Mark Delivered
+                            Mark Delivered
                           </button>
                         } @else {
                           <span class="text-muted small fst-italic">Final</span>
@@ -281,8 +289,8 @@ interface StatusTab {
                     <div class="p-3 rounded-3 bg-light h-100">
                       <h3 class="h6 fw-bold mb-2 text-uppercase text-secondary small">Customer Information</h3>
                       <div class="fw-semibold text-dark">{{ getClientName(selectedOrder) }}</div>
-                      <div class="small text-muted mb-1">📞 {{ getClientPhone(selectedOrder) }}</div>
-                      <div class="small text-muted">📧 {{ getClientEmail(selectedOrder) }}</div>
+                      <div class="small text-muted mb-1"><i class="bi bi-telephone-fill me-1"></i> {{ getClientPhone(selectedOrder) }}</div>
+                      <div class="small text-muted"><i class="bi bi-envelope-fill me-1"></i> {{ getClientEmail(selectedOrder) }}</div>
                     </div>
                   </div>
 

@@ -20,7 +20,7 @@ import { CreateOrderPayload } from '../../core/models/order.model';
         @if (cart.items.length === 0) {
           <!-- Empty Cart Notice -->
           <div class="card food-card text-center p-5 mx-auto empty-card">
-            <div class="display-3 mb-3">🛒</div>
+            <div class="display-3 mb-3 text-primary"><i class="bi bi-cart3"></i></div>
             <h1 class="h3 fw-bold mb-2">No items to checkout</h1>
             <p class="text-muted mb-4">Your cart is currently empty. Please select some dishes first!</p>
             <div>
@@ -50,7 +50,7 @@ import { CreateOrderPayload } from '../../core/models/order.model';
 
           @if (successMessage) {
             <div class="alert alert-success rounded-3 mb-4 shadow-sm p-4 text-center">
-              <h2 class="h4 fw-bold mb-2">🎉 {{ successMessage }}</h2>
+              <h2 class="h4 fw-bold mb-2"><i class="bi bi-bag-check-fill me-2"></i>{{ successMessage }}</h2>
               <p class="text-secondary mb-0">Redirecting to your orders page...</p>
             </div>
           } @else {
@@ -61,7 +61,7 @@ import { CreateOrderPayload } from '../../core/models/order.model';
                   <!-- 1. Delivery Address -->
                   <div class="card food-card p-4 mb-4">
                     <h2 class="h5 fw-bold mb-3 d-flex align-items-center gap-2">
-                      <span>📍</span> 1. Delivery Address
+                      <i class="bi bi-geo-alt-fill text-primary"></i> 1. Delivery Address
                     </h2>
 
                     <div class="mb-3">
@@ -104,7 +104,7 @@ import { CreateOrderPayload } from '../../core/models/order.model';
                   <!-- 2. Payment Method -->
                   <div class="card food-card p-4 mb-4">
                     <h2 class="h5 fw-bold mb-3 d-flex align-items-center gap-2">
-                      <span>💳</span> 2. Payment Method
+                      <i class="bi bi-credit-card text-primary"></i> 2. Payment Method
                     </h2>
 
                     <div class="d-flex flex-column gap-3">
@@ -123,7 +123,7 @@ import { CreateOrderPayload } from '../../core/models/order.model';
                           <div class="fw-bold text-dark">Cash on Delivery (Paiement à la livraison)</div>
                           <div class="text-muted small">Pay with cash when your food is delivered to your door.</div>
                         </div>
-                        <span class="fs-4">💵</span>
+                        <span class="fs-4 text-success"><i class="bi bi-cash"></i></span>
                       </label>
 
                       <!-- Online payment (disabled) -->
@@ -144,7 +144,7 @@ import { CreateOrderPayload } from '../../core/models/order.model';
                           </div>
                           <div class="text-muted small">Secure online credit card processing is under development.</div>
                         </div>
-                        <span class="fs-4 opacity-50">💳</span>
+                        <span class="fs-4 opacity-50"><i class="bi bi-credit-card"></i></span>
                       </label>
                     </div>
                   </div>
@@ -222,7 +222,7 @@ import { CreateOrderPayload } from '../../core/models/order.model';
                   </div>
 
                   <div class="mt-3 p-3 rounded-3 bg-light bg-opacity-75 small text-muted">
-                    ℹ️ Prices are verified server-side. Delivery is fulfilled directly by <strong>{{ cart.restaurantName }}</strong>.
+                    <i class="bi bi-info-circle-fill text-primary me-1"></i> Prices are verified server-side. Delivery is fulfilled directly by <strong>{{ cart.restaurantName }}</strong>.
                   </div>
                 </div>
               </div>

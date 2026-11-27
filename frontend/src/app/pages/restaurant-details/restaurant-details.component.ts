@@ -23,7 +23,7 @@ import { Category, Dish, Restaurant } from '../../core/models/restaurant.model';
     } @else if (errorMsg || !restaurant) {
       <div class="container py-5">
         <div class="card food-card text-center p-5">
-          <div class="fs-1 mb-2">⚠️</div>
+          <div class="fs-1 mb-2 text-warning"><i class="bi bi-exclamation-triangle-fill"></i></div>
           <h2 class="h4 fw-bold mb-2">{{ errorMsg || 'Restaurant not found' }}</h2>
           <p class="text-muted mb-4">The restaurant you are looking for may not be validated or is unavailable.</p>
           <div>
@@ -65,13 +65,13 @@ import { Category, Dish, Restaurant } from '../../core/models/restaurant.model';
 
                   <div class="small text-muted mb-3 d-flex flex-column gap-1">
                     @if (restaurant.adresse) {
-                      <div>📍 <strong>Address:</strong> {{ restaurant.adresse }}</div>
+                      <div><i class="bi bi-geo-alt-fill text-primary me-1"></i> <strong>Address:</strong> {{ restaurant.adresse }}</div>
                     }
                     @if (restaurant.horaires) {
-                      <div>🕒 <strong>Hours:</strong> {{ restaurant.horaires }}</div>
+                      <div><i class="bi bi-clock text-primary me-1"></i> <strong>Hours:</strong> {{ restaurant.horaires }}</div>
                     }
                     <div>
-                      🛵 <strong>Delivery Fee:</strong>
+                      <i class="bi bi-scooter text-primary me-1"></i> <strong>Delivery Fee:</strong>
                       <span class="text-primary fw-semibold">{{ restaurant.fraisLivraison }} DT</span>
                     </div>
                   </div>
@@ -80,7 +80,7 @@ import { Category, Dish, Restaurant } from '../../core/models/restaurant.model';
                 <!-- Closed Notice -->
                 @if (!restaurant.isOpen) {
                   <div class="alert alert-warning mb-0 py-2 px-3 small rounded-3" role="alert">
-                    ℹ️ This restaurant is currently closed. You can still browse the menu, but ordering is disabled.
+                    <i class="bi bi-info-circle-fill me-1"></i> This restaurant is currently closed. You can still browse the menu, but ordering is disabled.
                   </div>
                 }
               </div>
@@ -90,7 +90,7 @@ import { Category, Dish, Restaurant } from '../../core/models/restaurant.model';
       </section>
 
       <!-- Category Tabs & Dishes Section -->
-      <section class="container my-4">
+      <section class="container my-4" [class.pb-5]="cartCount > 0">
         <!-- Category Tabs/Chips -->
         <div class="d-flex gap-2 overflow-auto pb-3 mb-4 category-tabs">
           <button
@@ -183,15 +183,15 @@ import { Category, Dish, Restaurant } from '../../core/models/restaurant.model';
       <!-- Small Floating Cart Summary linking to /cart -->
       @if (cartCount > 0) {
         <div class="floating-cart-bar shadow-lg">
-          <div class="container d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center gap-3">
-              <span class="fs-4">🛒</span>
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 gap-sm-3">
+              <span class="fs-4 text-white"><i class="bi bi-cart3"></i></span>
               <div>
                 <strong class="d-block text-white">{{ cartCount }} item{{ cartCount > 1 ? 's' : '' }} in Cart</strong>
                 <small class="text-white-50">Total: {{ cartTotal }} DT</small>
               </div>
             </div>
-            <a routerLink="/cart" class="btn btn-light rounded-pill px-4 fw-bold">
+            <a routerLink="/cart" class="btn btn-light rounded-pill px-3 px-sm-4 fw-bold text-nowrap ms-auto">
               View Cart & Checkout →
             </a>
           </div>
@@ -201,10 +201,21 @@ import { Category, Dish, Restaurant } from '../../core/models/restaurant.model';
   `,
   styles: [`
     .header-img {
-      min-height: 250px;
+      min-height: 200px;
       max-height: 340px;
       object-fit: cover;
       background: #f3f4f6;
+    }
+    @media (max-width: 767.98px) {
+      .header-img {
+        max-height: 230px;
+      }
+      .floating-cart-bar {
+        width: calc(100% - 24px);
+        bottom: 12px;
+        padding: 12px 16px;
+        border-radius: 20px;
+      }
     }
     .dish-img {
       height: 180px;

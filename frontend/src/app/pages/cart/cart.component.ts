@@ -16,7 +16,7 @@ import { AuthService } from '../../core/services/auth.service';
         @if (cart.items.length === 0) {
           <!-- Empty Cart State -->
           <div class="card food-card text-center p-5 mx-auto empty-card">
-            <div class="display-3 mb-3">🛒</div>
+            <div class="display-3 mb-3 text-primary"><i class="bi bi-cart3"></i></div>
             <h1 class="h3 fw-bold mb-2">Your cart is empty</h1>
             <p class="text-muted mb-4">
               Looks like you haven't added anything to your cart yet. Explore our restaurant menus to find something delicious!
@@ -41,7 +41,7 @@ import { AuthService } from '../../core/services/auth.service';
               class="btn btn-outline-danger btn-sm rounded-pill px-3 align-self-start align-self-md-auto"
               (click)="clearCart()"
             >
-              🗑️ Clear Cart
+              <i class="bi bi-trash3 me-1"></i> Clear Cart
             </button>
           </div>
 
@@ -106,7 +106,7 @@ import { AuthService } from '../../core/services/auth.service';
                             (click)="removeItem(item.dishId)"
                             title="Remove item"
                           >
-                            ✕
+                            <i class="bi bi-x-lg"></i>
                           </button>
                         </div>
                       </div>
@@ -160,7 +160,7 @@ import { AuthService } from '../../core/services/auth.service';
                 </button>
 
                 <p class="text-center text-muted small mt-3 mb-0">
-                  🔒 Secure checkout & server-validated pricing
+                  <i class="bi bi-lock-fill me-1"></i> Secure checkout & server-validated pricing
                 </p>
               </div>
             </div>

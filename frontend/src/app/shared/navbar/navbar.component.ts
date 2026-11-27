@@ -36,18 +36,18 @@ import { CartService } from '../../core/services/cart.service';
                   Restaurateur Space
                 </a>
                 <ul class="dropdown-menu shadow-sm border-0" [class.show]="dashboardDropdownOpen">
-                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard/dishes" (click)="closeMenus()">🍽️ Manage Menu & Restaurant</a></li>
-                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard/orders" (click)="closeMenus()">📦 Orders Overview</a></li>
+                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard/dishes" (click)="closeMenus()"><i class="bi bi-fork-knife me-2"></i>Manage Menu & Restaurant</a></li>
+                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard/orders" (click)="closeMenus()"><i class="bi bi-box-seam me-2"></i>Orders Overview</a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard" (click)="closeMenus()">📊 Dashboard Home</a></li>
+                  <li><a class="dropdown-item py-2" routerLink="/restaurant-dashboard" (click)="closeMenus()"><i class="bi bi-bar-chart-line me-2"></i>Dashboard Home</a></li>
                 </ul>
               </div>
 
               <!-- Mobile-friendly links for restaurateur -->
               <div class="d-lg-none border-top my-2 pt-2">
                 <span class="text-muted small px-3 fw-bold d-block">RESTAURATEUR SPACE</span>
-                <a class="nav-link" routerLink="/restaurant-dashboard/dishes" routerLinkActive="active" (click)="menuOpen = false">🍽️ Manage Menu & Restaurant</a>
-                <a class="nav-link" routerLink="/restaurant-dashboard/orders" routerLinkActive="active" (click)="menuOpen = false">📦 Orders Overview</a>
+                <a class="nav-link" routerLink="/restaurant-dashboard/dishes" routerLinkActive="active" (click)="menuOpen = false"><i class="bi bi-fork-knife me-2"></i>Manage Menu & Restaurant</a>
+                <a class="nav-link" routerLink="/restaurant-dashboard/orders" routerLinkActive="active" (click)="menuOpen = false"><i class="bi bi-box-seam me-2"></i>Orders Overview</a>
               </div>
             }
 
