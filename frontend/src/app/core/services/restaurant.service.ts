@@ -8,12 +8,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Restaurant, RestaurantQueryFilters, RestaurantsResponse, RestaurantStatus } from '../models/restaurant.model';
+import { environment } from '../../../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 // KEY: An injectable service shares API logic across components.
 export class RestaurantService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api/restaurants';
+  private readonly baseUrl = `${environment.apiUrl}/restaurants`;
 
   getRestaurants(filters?: RestaurantQueryFilters, page = 1, limit = 12): Observable<RestaurantsResponse> {
     let params = new HttpParams()

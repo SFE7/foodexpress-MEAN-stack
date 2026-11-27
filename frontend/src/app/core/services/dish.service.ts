@@ -8,6 +8,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dish } from '../models/restaurant.model';
+import { environment } from '../../../environment/environment';
 
 export interface DishFilters {
   restaurant?: string;
@@ -20,7 +21,7 @@ export interface DishFilters {
 // KEY: An injectable service shares API logic across components.
 export class DishService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api/dishes';
+  private readonly baseUrl = `${environment.apiUrl}/dishes`;
 
   getDishes(filters?: DishFilters): Observable<Dish[]> {
     let params = new HttpParams();

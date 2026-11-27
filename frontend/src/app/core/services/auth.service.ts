@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { AuthResponse, User, UserRole } from '../models/user.model';
+import { environment } from '../../../environment/environment';
 
 export interface RegisterPayload {
   nom: string;
@@ -38,6 +39,7 @@ export class AuthService {
   register(payload: RegisterPayload): Observable<AuthResponse> {
     // POST /api/auth/register; Observable emits the new JWT and public user.
     return this.http.post<AuthResponse>('/api/auth/register', payload).pipe(
+
       tap((response) => this.storeSession(response)),
     );
   }
@@ -47,6 +49,7 @@ export class AuthService {
     // DEMO TIP: login POSTs credentials and stores the JWT plus user locally.
     // POST /api/auth/login; Observable emits session data after successful login.
     return this.http.post<AuthResponse>('/api/auth/login', { email, password }).pipe(
+
       tap((response) => this.storeSession(response)),
     );
   }
@@ -59,7 +62,7 @@ export class AuthService {
 
 // GET /api/auth/me; Observable returns Observable<User>.
   getMe(): Observable<User> {
-    return this.http.get<{ user: User }>('/api/auth/me').pipe(
+    return this.http.get<{ user: User }>(`${environment.apiUrl}/auth/me`).pipe(
       map((response) => response.user),
       tap((user) => {
         localStorage.setItem(USER_KEY, JSON.stringify(user));
@@ -70,7 +73,7 @@ export class AuthService {
 
 // PUT /api/auth/profile; Observable returns Observable<User>.
   updateProfile(payload: ProfileUpdate): Observable<User> {
-    return this.http.put<{ user: User }>('/api/auth/profile', payload).pipe(
+    return this.http.put<{ user: User }>(`${environment.apiUrl}/auth/profile`, payload).pipe(
       map((response) => response.user),
       tap((user) => {
         localStorage.setItem(USER_KEY, JSON.stringify(user));

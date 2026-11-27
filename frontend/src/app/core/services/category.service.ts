@@ -8,12 +8,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Category } from '../models/restaurant.model';
+import { environment } from '../../../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 // KEY: An injectable service shares API logic across components.
 export class CategoryService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api/categories';
+  private readonly baseUrl = `${environment.apiUrl}/categories`;
 
   getCategories(restaurantId?: string): Observable<Category[]> {
     let params = new HttpParams();

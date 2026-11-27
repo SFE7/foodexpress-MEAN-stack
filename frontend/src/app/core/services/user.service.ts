@@ -8,12 +8,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { User } from '../models/user.model';
+import { environment } from '../../../environment/environment';
 
 @Injectable({ providedIn: 'root' })
 // KEY: An injectable service shares API logic across components.
 export class UserService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = '/api/users';
+  private readonly baseUrl = `${environment.apiUrl}/users`;
 
   getUsers(search?: string): Observable<User[]> {
     let params = new HttpParams();
