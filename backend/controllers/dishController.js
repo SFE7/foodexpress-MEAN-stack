@@ -1,9 +1,18 @@
+/**
+ * FILE: backend/controllers/dishController.js
+ * ROLE: API request controller.
+ * USED BY / TALKS TO: Route files call exported handlers.
+ * KEY IDEA: Validate input and return HTTP responses.
+ */
 const Dish = require('../models/Dish');
 const Restaurant = require('../models/Restaurant');
 const Category = require('../models/Category');
 
 // GET /api/dishes (PUBLIC)
 // query `restaurant` (required for normal use), optional `categorie`, `search`, `disponible`. Populate categorie (nom).
+// Route: GET /api/dishes; called by public visitors.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 400 for invalid filters; unexpected failures go to next(error).
 async function getDishes(req, res, next) {
   try {
     const { restaurant, categorie, search, disponible } = req.query;
@@ -34,6 +43,9 @@ async function getDishes(req, res, next) {
 }
 
 // GET /api/dishes/:id (PUBLIC)
+// Route: GET /api/dishes/:id; called by public visitors.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 404 if the dish is missing; unexpected failures go to next(error).
 async function getDishById(req, res, next) {
   try {
     const dish = await Dish.findById(req.params.id)
@@ -53,6 +65,9 @@ async function getDishById(req, res, next) {
 // POST /api/dishes (restaurateur, admin)
 // validate nom, prix >= 0, restaurant; verify restaurant belongs to restaurateur (admin: any).
 // verify categorie, if provided, belongs to that restaurant.
+// Route: POST /api/dishes; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 400 for bad input, 403 for wrong owner; unexpected failures go to next(error).
 async function createDish(req, res, next) {
   try {
     const { nom, description, prix, image, disponible, categorie, restaurant } = req.body;
@@ -109,6 +124,9 @@ async function createDish(req, res, next) {
 
 // PUT /api/dishes/:id
 // update nom, description, prix, image, disponible, categorie, with ownership check.
+// Route: PUT /api/dishes/:id; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for wrong owner, 404 if missing; unexpected failures go to next(error).
 async function updateDish(req, res, next) {
   try {
     const dish = await Dish.findById(req.params.id);
@@ -167,6 +185,9 @@ async function updateDish(req, res, next) {
 }
 
 // DELETE /api/dishes/:id (ownership check)
+// Route: DELETE /api/dishes/:id; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for wrong owner, 404 if missing; unexpected failures go to next(error).
 async function deleteDish(req, res, next) {
   try {
     const dish = await Dish.findById(req.params.id);

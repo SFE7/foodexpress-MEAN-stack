@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/core/models/order.model.ts
+ * ROLE: Frontend TypeScript data shape.
+ * USED BY / TALKS TO: Services and components.
+ * KEY IDEA: Interfaces document API response shapes.
+ */
 import { Dish, Restaurant } from './restaurant.model';
 import { User } from './user.model';
 

@@ -1,9 +1,18 @@
+/**
+ * FILE: backend/controllers/categoryController.js
+ * ROLE: API request controller.
+ * USED BY / TALKS TO: Route files call exported handlers.
+ * KEY IDEA: Validate input and return HTTP responses.
+ */
 const Category = require('../models/Category');
 const Dish = require('../models/Dish');
 const Restaurant = require('../models/Restaurant');
 
 // GET /api/categories (PUBLIC)
 // query restaurant = id returns that restaurant's categories; no query returns general categories (restaurant null).
+// Route: GET /api/categories; called by public or admin depending on filters.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 404 if a requested category is missing; unexpected failures go to next(error).
 async function getCategories(req, res, next) {
   try {
     const { restaurant } = req.query;
@@ -16,6 +25,9 @@ async function getCategories(req, res, next) {
 }
 
 // POST /api/categories (admin creates general category; restaurateur creates for restaurant they own)
+// Route: POST /api/categories; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 400 or 403 for invalid ownership; unexpected failures go to next(error).
 async function createCategory(req, res, next) {
   try {
     const { nom, description, restaurant } = req.body;
@@ -69,6 +81,9 @@ async function createCategory(req, res, next) {
 }
 
 // PUT /api/categories/:id (admin can manage all; restaurateur can manage categories for restaurants they own)
+// Route: PUT /api/categories/:id; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for wrong owner, 404 if missing; unexpected failures go to next(error).
 async function updateCategory(req, res, next) {
   try {
     const category = await Category.findById(req.params.id);
@@ -106,6 +121,9 @@ async function updateCategory(req, res, next) {
 
 // DELETE /api/categories/:id
 // Deleting a category with dishes must be refused with a clear 400 message
+// Route: DELETE /api/categories/:id; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for wrong owner, 404 if missing; unexpected failures go to next(error).
 async function deleteCategory(req, res, next) {
   try {
     const category = await Category.findById(req.params.id);

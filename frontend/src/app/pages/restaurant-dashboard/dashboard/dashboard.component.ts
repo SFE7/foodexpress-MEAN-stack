@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/restaurant-dashboard/dashboard/dashboard.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -278,6 +284,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class RestaurantDashboardComponent implements OnInit {
   private readonly auth = inject(AuthService);
   private readonly dashboardService = inject(DashboardService);
@@ -300,6 +307,7 @@ export class RestaurantDashboardComponent implements OnInit {
   actionSuccess = '';
   acceptingOrderId: string | null = null;
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     this.loadRestaurantsAndDashboard();
   }

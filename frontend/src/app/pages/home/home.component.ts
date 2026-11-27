@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/home/home.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -130,6 +136,7 @@ import { Restaurant } from '../../core/models/restaurant.model';
     .cuisine-scroll::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 4px; }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class HomeComponent implements OnInit {
   private readonly restaurantService = inject(RestaurantService);
   private readonly router = inject(Router);
@@ -140,6 +147,7 @@ export class HomeComponent implements OnInit {
   popularRestaurants = signal<Restaurant[]>([]);
   loading = signal(true);
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     this.loadCuisines();
     this.loadPopularRestaurants();

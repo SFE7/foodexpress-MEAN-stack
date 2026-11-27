@@ -1,3 +1,9 @@
+/**
+ * FILE: backend/controllers/orderController.js
+ * ROLE: API request controller.
+ * USED BY / TALKS TO: Route files call exported handlers.
+ * KEY IDEA: Validate input and return HTTP responses.
+ */
 const Order = require('../models/Order');
 const Dish = require('../models/Dish');
 const Restaurant = require('../models/Restaurant');
@@ -11,7 +17,12 @@ const ORDER_TRANSITIONS = {
   annulee: [],
 };
 
+// DEMO TIP: Explain this transition map to show why livree and annulee are locked.
+
 // POST /api/orders (client only)
+// Route: POST /api/orders; called by authenticated clients.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 400 for invalid items or 404 for missing records.
 async function createOrder(req, res, next) {
   try {
     const { restaurant, articles, adresseLivraison, modePaiement, remarque } = req.body;
@@ -121,6 +132,9 @@ async function createOrder(req, res, next) {
 }
 
 // GET /api/orders/my-orders (client only)
+// Route: GET /api/orders/my-orders; called by authenticated clients.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 401 without a JWT; unexpected failures go to next(error).
 async function getMyOrders(req, res, next) {
   try {
     const orders = await Order.find({ client: req.user._id })
@@ -135,6 +149,9 @@ async function getMyOrders(req, res, next) {
 }
 
 // GET /api/orders/restaurant (restaurateur, admin)
+// Route: GET /api/orders/restaurant; called by restaurant owners and admins.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for wrong ownership; unexpected failures go to next(error).
 async function getRestaurantOrders(req, res, next) {
   try {
     const query = {};
@@ -174,6 +191,9 @@ async function getRestaurantOrders(req, res, next) {
 }
 
 // GET /api/orders/:id (client owner, restaurant owner, admin)
+// Route: GET /api/orders/:id; called by order owner, restaurant owner, or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for access denial, 404 if missing; unexpected failures go to next(error).
 async function getOrderById(req, res, next) {
   try {
     const order = await Order.findById(req.params.id)
@@ -206,6 +226,9 @@ async function getOrderById(req, res, next) {
 }
 
 // PUT /api/orders/:id/status (admin, restaurant owner, or client cancelling en_attente)
+// Route: PUT /api/orders/:id/status; called by admin or authorized restaurant owner.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 400 for invalid transition or 403 for wrong role.
 async function updateOrderStatus(req, res, next) {
   try {
     const order = await Order.findById(req.params.id).populate('restaurant');

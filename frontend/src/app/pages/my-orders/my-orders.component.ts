@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/my-orders/my-orders.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -369,6 +375,7 @@ interface StepDef {
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class MyOrdersComponent implements OnInit, OnDestroy {
   private readonly orderService = inject(OrderService);
 
@@ -400,6 +407,7 @@ export class MyOrdersComponent implements OnInit, OnDestroy {
 
   private pollSubscription?: Subscription;
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     this.loadOrders(true);
 

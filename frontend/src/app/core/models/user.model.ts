@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/core/models/user.model.ts
+ * ROLE: Frontend TypeScript data shape.
+ * USED BY / TALKS TO: Services and components.
+ * KEY IDEA: Interfaces document API response shapes.
+ */
 export type UserRole = 'client' | 'restaurateur' | 'admin';
 
 export interface User {

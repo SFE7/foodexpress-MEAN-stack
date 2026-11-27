@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/core/services/cart.service.ts
+ * ROLE: Angular API service.
+ * USED BY / TALKS TO: Components and other Angular services.
+ * KEY IDEA: HTTP calls return RxJS Observables.
+ */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 
@@ -41,8 +47,10 @@ const EMPTY_CART: CartState = {
 };
 
 @Injectable({ providedIn: 'root' })
+// KEY: An injectable service shares API logic across components.
 export class CartService {
   private readonly stateSubject = new BehaviorSubject<CartState>(this.readCart());
+  // Cart state is shared as Observables so every cart page reacts to changes.
   readonly cart$ = this.stateSubject.asObservable();
   private readonly itemsSubject = new BehaviorSubject<CartItem[]>(this.stateSubject.value.items);
   readonly items$ = this.itemsSubject.asObservable();
@@ -55,6 +63,7 @@ export class CartService {
   }
 
   addItem(dish: CartDish, restaurant: CartRestaurant): boolean {
+    // BUSINESS RULE: unavailable dishes and cross-restaurant items cannot be mixed.
     if (dish.disponible === false) {
       return false;
     }
@@ -93,6 +102,7 @@ export class CartService {
   }
 
   increase(dishId: string): void {
+    // Increasing quantity keeps the same persisted restaurant and delivery fee.
     this.update({
       ...this.stateSubject.value,
       items: this.stateSubject.value.items.map((item) =>
@@ -118,6 +128,7 @@ export class CartService {
   }
 
   getSubTotal(): number {
+    // Subtotal is the sum of each dish price multiplied by its quantity.
     return this.stateSubject.value.items.reduce((total, item) => total + item.prix * item.quantite, 0);
   }
 
@@ -134,6 +145,7 @@ export class CartService {
   }
 
   private update(cart: CartState): void {
+    // LocalStorage keeps the cart after refresh; an empty cart is removed.
     this.stateSubject.next(cart);
     if (cart.items.length) {
       localStorage.setItem(CART_KEY, JSON.stringify(cart));

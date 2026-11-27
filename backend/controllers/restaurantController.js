@@ -1,8 +1,17 @@
+/**
+ * FILE: backend/controllers/restaurantController.js
+ * ROLE: API request controller.
+ * USED BY / TALKS TO: Route files call exported handlers.
+ * KEY IDEA: Validate input and return HTTP responses.
+ */
 const Restaurant = require('../models/Restaurant');
 const Dish = require('../models/Dish');
 const Category = require('../models/Category');
 
 // GET /api/restaurants (PUBLIC)
+// Route: GET /api/restaurants; called by public visitors.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 400 for invalid query values; unexpected failures go to next(error).
 async function getRestaurants(req, res, next) {
   try {
     const { search, typeCuisine, isOpen, sort = 'alpha', page = 1, limit = 12 } = req.query;
@@ -49,6 +58,9 @@ async function getRestaurants(req, res, next) {
 }
 
 // GET /api/restaurants/mine (restaurateur or admin)
+// Route: GET /api/restaurants/mine; called by authenticated restaurateur.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 401 without a JWT; unexpected failures go to next(error).
 async function getMyRestaurants(req, res, next) {
   try {
     const restaurants = await Restaurant.find({ owner: req.user._id })
@@ -61,6 +73,9 @@ async function getMyRestaurants(req, res, next) {
 }
 
 // GET /api/restaurants/admin/all (admin only - returns all restaurants regardless of status)
+// Route: GET /api/restaurants/admin/all; called by admin users.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for a non-admin role; unexpected failures go to next(error).
 async function getAllRestaurantsAdmin(req, res, next) {
   try {
     const restaurants = await Restaurant.find()
@@ -73,6 +88,9 @@ async function getAllRestaurantsAdmin(req, res, next) {
 }
 
 // GET /api/restaurants/cuisines (PUBLIC)
+// Route: GET /api/restaurants/cuisines; called by public visitors.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: No route-level 400 expected; unexpected failures go to next(error).
 async function getCuisines(req, res, next) {
   try {
     const cuisines = await Restaurant.distinct('typeCuisine', {
@@ -86,6 +104,9 @@ async function getCuisines(req, res, next) {
 }
 
 // GET /api/restaurants/:id (PUBLIC)
+// Route: GET /api/restaurants/:id; called by public visitors.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 404 if the restaurant is missing; unexpected failures go to next(error).
 async function getRestaurantById(req, res, next) {
   try {
     const restaurant = await Restaurant.findById(req.params.id).populate('owner', 'nom prenom email telephone');
@@ -107,6 +128,9 @@ async function getRestaurantById(req, res, next) {
 }
 
 // POST /api/restaurants (restaurateur, admin)
+// Route: POST /api/restaurants; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 400 for bad input, 403 for wrong owner; unexpected failures go to next(error).
 async function createRestaurant(req, res, next) {
   try {
     const { nom, description, adresse, typeCuisine, image, fraisLivraison, horaires, isOpen, owner } = req.body;
@@ -145,6 +169,9 @@ async function createRestaurant(req, res, next) {
 }
 
 // PUT /api/restaurants/:id (restaurateur owner or admin)
+// Route: PUT /api/restaurants/:id; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for wrong owner, 404 if missing; unexpected failures go to next(error).
 async function updateRestaurant(req, res, next) {
   try {
     const restaurant = await Restaurant.findById(req.params.id);
@@ -181,6 +208,9 @@ async function updateRestaurant(req, res, next) {
 }
 
 // DELETE /api/restaurants/:id (owner or admin)
+// Route: DELETE /api/restaurants/:id; called by authorized restaurateur or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for wrong owner, 404 if missing; unexpected failures go to next(error).
 async function deleteRestaurant(req, res, next) {
   try {
     const restaurant = await Restaurant.findById(req.params.id);
@@ -203,6 +233,9 @@ async function deleteRestaurant(req, res, next) {
 }
 
 // PATCH /api/restaurants/:id/status (admin only)
+// Route: PATCH /api/restaurants/:id/status; called by admin users.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for non-admin, 404 if missing; unexpected failures go to next(error).
 async function updateRestaurantStatus(req, res, next) {
   try {
     const { status } = req.body;

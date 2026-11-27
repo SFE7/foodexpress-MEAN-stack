@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/cart/cart.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -193,6 +199,7 @@ import { AuthService } from '../../core/services/auth.service';
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class CartComponent {
   private readonly cartService = inject(CartService);
   private readonly auth = inject(AuthService);

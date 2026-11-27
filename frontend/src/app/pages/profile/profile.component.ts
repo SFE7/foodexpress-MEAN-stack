@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/profile/profile.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
@@ -51,6 +57,7 @@ import { AuthService } from '../../core/services/auth.service';
     .field-error { color: #b42318; font-size: .875rem; margin-top: .25rem; }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class ProfileComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);
@@ -64,6 +71,7 @@ export class ProfileComponent implements OnInit {
   protected successMessage = '';
   protected saving = false;
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     this.auth.getMe().subscribe({
       next: (user) => this.form.patchValue({ nom: user.nom, prenom: user.prenom, telephone: user.telephone }),

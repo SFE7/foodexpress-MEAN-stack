@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/checkout/checkout.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -255,6 +261,7 @@ import { CreateOrderPayload } from '../../core/models/order.model';
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class CheckoutComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly cartService = inject(CartService);
@@ -273,6 +280,7 @@ export class CheckoutComponent implements OnInit {
     modePaiement: ['livraison', Validators.required],
   });
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     // Pre-fill user details if available
     const user = this.auth.getUser();
@@ -296,6 +304,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   submitOrder(cart: CartState): void {
+    // DEMO TIP: frontend totals are display-only; the server reloads prices.
     if (this.form.invalid || this.submitting) {
       this.form.markAllAsTouched();
       return;

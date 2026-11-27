@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/shared/navbar/navbar.component.ts
+ * ROLE: Reusable Angular UI component.
+ * USED BY / TALKS TO: Parent components and app shell.
+ * KEY IDEA: Reusable UI keeps the project consistent.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
@@ -88,6 +94,7 @@ import { CartService } from '../../core/services/cart.service';
     @media (max-width: 575.98px) { .food-brand-logo { height: 36px; } }
   `],
 })
+// KEY: Dependency injection supplies shared services to this class.
 export class NavbarComponent {
   protected readonly auth = inject(AuthService);
   private readonly router = inject(Router);

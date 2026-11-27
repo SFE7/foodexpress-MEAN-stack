@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/restaurants/restaurants.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -187,6 +193,7 @@ import { Restaurant } from '../../core/models/restaurant.model';
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class RestaurantsComponent implements OnInit {
   private readonly restaurantService = inject(RestaurantService);
   private readonly route = inject(ActivatedRoute);
@@ -207,6 +214,7 @@ export class RestaurantsComponent implements OnInit {
   totalPages = 1;
   total = 0;
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     this.restaurantService.getCuisines().subscribe({
       next: (c) => (this.cuisines = c),

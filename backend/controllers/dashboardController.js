@@ -1,3 +1,9 @@
+/**
+ * FILE: backend/controllers/dashboardController.js
+ * ROLE: API request controller.
+ * USED BY / TALKS TO: Route files call exported handlers.
+ * KEY IDEA: Validate input and return HTTP responses.
+ */
 const mongoose = require('mongoose');
 const Order = require('../models/Order');
 const Restaurant = require('../models/Restaurant');
@@ -12,11 +18,15 @@ const ORDER_STATUSES = [
   'annulee',
 ];
 
+// Helper: prepares safe values or data for the controller.
 function roundAmount(value) {
   return Math.round((Number(value) || 0) * 1000) / 1000;
 }
 
 // GET /api/dashboard/restaurant (restaurateur, admin)
+// Route: GET /api/dashboard/restaurant; called by restaurant owner or admin.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for wrong role; unexpected failures go to next(error).
 async function getRestaurantDashboard(req, res, next) {
   try {
     const restaurantParam = typeof req.query.restaurant === 'string' ? req.query.restaurant.trim() : '';
@@ -89,6 +99,9 @@ async function getRestaurantDashboard(req, res, next) {
 }
 
 // GET /api/dashboard/admin (admin only)
+// Route: GET /api/dashboard/admin; called by admin users.
+// Steps: validate input, query or update MongoDB, then return JSON.
+// Possible errors: 403 for non-admin; unexpected failures go to next(error).
 async function getAdminDashboard(req, res, next) {
   try {
     // Global revenue rule: sum of `total` of all orders whose statut is NOT 'annulee'

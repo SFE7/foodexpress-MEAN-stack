@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/admin-dashboard/users/users.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -133,6 +139,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class UsersComponent implements OnInit {
   private readonly userService = inject(UserService);
   private readonly auth = inject(AuthService);
@@ -146,6 +153,7 @@ export class UsersComponent implements OnInit {
   alertMessage = '';
   alertType: 'success' | 'danger' = 'success';
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     this.searchSubject
       .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))

@@ -1,6 +1,13 @@
+<!--
+  FILE: frontend/src/app/app.html
+  ROLE: Root Angular HTML template.
+  USED BY / TALKS TO: The App component and shared navbar/footer.
+  KEY IDEA: Router outlet swaps pages without changing the app shell.
+-->
 @if (showShell()) {
   <app-navbar />
 }
+<!-- router-outlet swaps the page component when the URL changes. -->
 <main class="app-main">
   <router-outlet />
 </main>

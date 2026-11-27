@@ -1,3 +1,9 @@
+/**
+ * FILE: backend/scripts/seed.js
+ * ROLE: Database sample-data script.
+ * USED BY / TALKS TO: Run manually with Node.
+ * KEY IDEA: Seed data resets demo records safely.
+ */
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const mongoose = require('mongoose');

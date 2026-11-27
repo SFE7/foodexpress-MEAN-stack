@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/register/register.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
@@ -83,6 +89,7 @@ function matchingPasswords(control: AbstractControl): ValidationErrors | null {
     .field-error { color: #b42318; font-size: .8rem; margin-top: .25rem; }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);

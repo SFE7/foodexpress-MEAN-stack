@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/shared/portal-nav/portal-nav.component.ts
+ * ROLE: Reusable Angular UI component.
+ * USED BY / TALKS TO: Parent components and app shell.
+ * KEY IDEA: Reusable UI keeps the project consistent.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, Input, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -75,6 +81,7 @@ interface PortalNavItem {
     }
   `],
 })
+// KEY: Dependency injection supplies shared services to this class.
 export class PortalNavComponent {
   private readonly auth = inject(AuthService);
 

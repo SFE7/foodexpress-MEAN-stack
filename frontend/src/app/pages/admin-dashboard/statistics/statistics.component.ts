@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/admin-dashboard/statistics/statistics.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -220,6 +226,7 @@ interface StatusSegment {
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class StatisticsComponent implements OnInit {
   private readonly dashboardService = inject(DashboardService);
 
@@ -235,7 +242,9 @@ export class StatisticsComponent implements OnInit {
   loading = true;
   errorMessage = '';
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
+    // DEMO TIP: aggregation counts and sums are computed by the dashboard API.
     this.dashboardService.getAdminStats().subscribe({
       next: (data) => {
         this.stats = data;

@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/core/services/auth.service.ts
+ * ROLE: Angular API service.
+ * USED BY / TALKS TO: Components and other Angular services.
+ * KEY IDEA: HTTP calls return RxJS Observables.
+ */
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, map, tap } from 'rxjs';
@@ -21,18 +27,25 @@ const TOKEN_KEY = 'foodexpress_token';
 const USER_KEY = 'foodexpress_user';
 
 @Injectable({ providedIn: 'root' })
+// KEY: An injectable service shares API logic across components.
 export class AuthService {
   private readonly http = inject(HttpClient);
+  // BehaviorSubject lets many components react when login or logout changes.
   private readonly userSubject = new BehaviorSubject<User | null>(this.readStoredUser());
   readonly currentUser$ = this.userSubject.asObservable();
 
+// POST /api/auth/register; Observable returns Observable<AuthResponse>.
   register(payload: RegisterPayload): Observable<AuthResponse> {
+    // POST /api/auth/register; Observable emits the new JWT and public user.
     return this.http.post<AuthResponse>('/api/auth/register', payload).pipe(
       tap((response) => this.storeSession(response)),
     );
   }
 
+// POST /api/auth/login; Observable returns Observable<AuthResponse>.
   login(email: string, password: string): Observable<AuthResponse> {
+    // DEMO TIP: login POSTs credentials and stores the JWT plus user locally.
+    // POST /api/auth/login; Observable emits session data after successful login.
     return this.http.post<AuthResponse>('/api/auth/login', { email, password }).pipe(
       tap((response) => this.storeSession(response)),
     );
@@ -44,6 +57,7 @@ export class AuthService {
     this.userSubject.next(null);
   }
 
+// GET /api/auth/me; Observable returns Observable<User>.
   getMe(): Observable<User> {
     return this.http.get<{ user: User }>('/api/auth/me').pipe(
       map((response) => response.user),
@@ -54,6 +68,7 @@ export class AuthService {
     );
   }
 
+// PUT /api/auth/profile; Observable returns Observable<User>.
   updateProfile(payload: ProfileUpdate): Observable<User> {
     return this.http.put<{ user: User }>('/api/auth/profile', payload).pipe(
       map((response) => response.user),

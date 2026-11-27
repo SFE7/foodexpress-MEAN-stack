@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/app.ts
+ * ROLE: Root Angular component.
+ * USED BY / TALKS TO: app.html and shared shell components.
+ * KEY IDEA: Signals control which shell UI is visible.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
@@ -13,6 +19,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
   styleUrl: './app.css',
   templateUrl: './app.html',
 })
+// KEY: Dependency injection supplies shared services to this class.
 export class App {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);

@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/login/login.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
@@ -48,6 +54,7 @@ import { UserRole } from '../../core/models/user.model';
     .field-error { color: #b42318; font-size: .875rem; }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class LoginComponent {
   private readonly fb = inject(FormBuilder);
   private readonly auth = inject(AuthService);

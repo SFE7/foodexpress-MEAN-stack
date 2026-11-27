@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/restaurant-dashboard/manage-orders/manage-orders.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -404,6 +410,7 @@ interface StatusTab {
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class ManageOrdersComponent implements OnInit, OnDestroy {
   private readonly orderService = inject(OrderService);
 
@@ -438,6 +445,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
     return this.allOrders.filter((o) => o.statut === this.activeTab);
   }
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     this.loadOrders(true);
 
@@ -486,6 +494,7 @@ export class ManageOrdersComponent implements OnInit, OnDestroy {
   }
 
   updateStatus(order: Order, newStatus: OrderStatus): void {
+    // DEMO TIP: status changes are server-checked before the lifecycle advances.
     this.actionLoadingId = order._id;
     this.actionError = null;
     this.actionSuccess = null;

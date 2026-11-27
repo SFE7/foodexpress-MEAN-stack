@@ -1,3 +1,9 @@
+/**
+ * FILE: frontend/src/app/pages/restaurant-dashboard/manage-dishes/manage-dishes.component.ts
+ * ROLE: Angular page component.
+ * USED BY / TALKS TO: app.routes.ts and templates.
+ * KEY IDEA: A component connects UI bindings to TypeScript.
+ */
 import { ChangeDetectionStrategy } from '@angular/core';
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -428,6 +434,7 @@ import { PortalNavComponent } from '../../../shared/portal-nav/portal-nav.compon
     }
   `],
 })
+// KEY: A component links TypeScript state to the page template.
 export class ManageDishesComponent implements OnInit {
   private readonly restaurantService = inject(RestaurantService);
   private readonly categoryService = inject(CategoryService);
@@ -462,6 +469,7 @@ export class ManageDishesComponent implements OnInit {
   editingCategory: Category | null = null;
   categoryForm: { nom: string; description: string } = { nom: '', description: '' };
 
+// Lifecycle: Angular calls ngOnInit once after initial data setup.
   ngOnInit(): void {
     this.loadMyRestaurants();
   }
@@ -604,6 +612,7 @@ export class ManageDishesComponent implements OnInit {
   }
 
   saveDish(): void {
+    // DEMO TIP: add a dish, set price and availability, then verify it appears publicly.
     if (!this.selectedRestaurant) return;
 
     if (this.editingDish) {

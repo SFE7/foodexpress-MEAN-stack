@@ -1,3 +1,9 @@
+/**
+ * FILE: backend/routes/restaurantRoutes.js
+ * ROLE: Express route definitions.
+ * USED BY / TALKS TO: server.js mounts this router.
+ * KEY IDEA: Route order determines which handler runs.
+ */
 const express = require('express');
 const router = express.Router();
 const restaurantController = require('../controllers/restaurantController');
@@ -25,9 +31,11 @@ async function optionalAuth(req, res, next) {
 }
 
 // 1. GET / (PUBLIC)
+// GET /: public by default; calls the controller.
 router.get('/', restaurantController.getRestaurants);
 
 // 2. GET /mine (restaurateur or admin) - declared BEFORE /:id
+// GET /mine: public by default; calls the controller.
 router.get(
   '/mine',
   authMiddleware,
@@ -36,6 +44,7 @@ router.get(
 );
 
 // 2b. GET /admin/all (admin only) - declared BEFORE /:id
+// GET /admin/all: public by default; calls the controller.
 router.get(
   '/admin/all',
   authMiddleware,
@@ -44,12 +53,15 @@ router.get(
 );
 
 // 3. GET /cuisines (PUBLIC) - declared BEFORE /:id
+// GET /cuisines: public by default; calls the controller.
 router.get('/cuisines', restaurantController.getCuisines);
 
 // 4. GET /:id (PUBLIC or authenticated owner/admin if not validated)
+// GET /:id: public by default; calls the controller.
 router.get('/:id', optionalAuth, restaurantController.getRestaurantById);
 
 // 5. POST / (restaurateur, admin)
+// POST /: public by default; calls the controller.
 router.post(
   '/',
   authMiddleware,
@@ -58,6 +70,7 @@ router.post(
 );
 
 // 6. PUT /:id (restaurateur owner or admin)
+// PUT /:id: public by default; calls the controller.
 router.put(
   '/:id',
   authMiddleware,
@@ -66,6 +79,7 @@ router.put(
 );
 
 // 7. DELETE /:id (owner or admin)
+// DELETE /:id: public by default; calls the controller.
 router.delete(
   '/:id',
   authMiddleware,
@@ -74,6 +88,7 @@ router.delete(
 );
 
 // 8. PATCH /:id/status (admin only)
+// PATCH /:id/status: public by default; calls the controller.
 router.patch(
   '/:id/status',
   authMiddleware,
