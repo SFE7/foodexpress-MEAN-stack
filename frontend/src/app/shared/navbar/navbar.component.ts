@@ -13,7 +13,10 @@ import { CartService } from '../../core/services/cart.service';
   template: `
     <nav class="navbar navbar-expand-lg food-navbar">
       <div class="container">
-        <a class="navbar-brand food-brand" routerLink="/">Food<span>Express</span></a>
+        <a class="navbar-brand food-brand d-inline-flex align-items-center gap-2" routerLink="/">
+          <img src="/logo.png" alt="FoodExpress logo" class="food-brand-logo" />
+          Food<span>Express</span>
+        </a>
         <button class="navbar-toggler" type="button" aria-label="Toggle navigation"
           (click)="menuOpen = !menuOpen" [attr.aria-expanded]="menuOpen">
           <span class="navbar-toggler-icon"></span>
@@ -77,10 +80,12 @@ import { CartService } from '../../core/services/cart.service';
   styles: [`
     .food-navbar { background: #fff; box-shadow: 0 2px 18px rgb(31 41 55 / 6%); }
     .food-brand { color: #1f2937; font-weight: 850; letter-spacing: -.05em; font-size: 1.45rem; }
+    .food-brand-logo { height: 42px; width: auto; display: block; object-fit: contain; }
     .food-brand span { color: #e4572e; }
     .nav-link { font-weight: 550; }
     .dropdown-menu { border-radius: 12px; min-width: 230px; }
     @media (max-width: 991.98px) { .navbar-collapse { padding: .8rem 0; } }
+    @media (max-width: 575.98px) { .food-brand-logo { height: 36px; } }
   `],
 })
 export class NavbarComponent {
